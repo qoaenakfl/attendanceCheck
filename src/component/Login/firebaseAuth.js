@@ -49,10 +49,10 @@ class firebaseAuth extends React.Component{
     }
     
     render(){
-        const user= this.props.value;
+        
         return(            
             <div className="App">
-                {
+                {/* {
                     user
                     ? <p>Hello, {user.displayName}</p>
                     : <p>Please sign in.</p>
@@ -61,7 +61,8 @@ class firebaseAuth extends React.Component{
                     user
                     ? <Button onClick={this.signOut}>Sign out</Button>
                     : <Button onClick={this.signInWithGoogle}>Sign in with Google</Button>
-                }
+                } */}
+                <Button onClick={this.signInWithGoogle}>Sign in with Google</Button>
             </div>
         );
     }
