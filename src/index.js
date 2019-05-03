@@ -12,7 +12,7 @@ class App extends React.Component {
     }
 
   render() {
-    if(true){
+    if(false){
         return (<Layout/>)
     }else{
         return (<Login/>);
