@@ -2,7 +2,7 @@ import React from "react";
 import Input from './Input'
 import './login.css'
 import {Layout} from 'antd';
-import FirebaseAuth from '../Login/firebaseAuth'
+import FirebaseAuth from '../common/firebaseAuth'
 
 class loginComp extends React.Component{
     constructor(props){
@@ -10,18 +10,17 @@ class loginComp extends React.Component{
 
         this.state={
             phoneNum:'',
-            user:''
         }
         this.handleChange= this.handleChange.bind(this);
-        this.userChanger= this.userChanger.bind(this);
+        this.userChange= this.userChange.bind(this);
     }
 
     handleChange(phoneNum){
         this.setState({phoneNum: phoneNum});
     }
 
-    userChanger(_user){
-        this.setState({user:_user});
+    userChange(_user){
+        this.props.userLogin(_user);
     }
  
     render(){
@@ -31,7 +30,10 @@ class loginComp extends React.Component{
                     value={this.state.phoneNum}
                     onPhoneNumChange={this.handleChange}
                 />                
-                <FirebaseAuth/>
+                <FirebaseAuth
+                    userLogin={this.userChange}
+                    user={this.props.user}
+                />
             </Layout>
         );
     };

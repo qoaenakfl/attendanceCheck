@@ -7,15 +7,33 @@ import Login from "./component/Login/login";
 import Layout from './component/layout/layout'
 
 class App extends React.Component {
-    constructor(props){
-        super(props)
+  constructor(props){
+    super(props);
+
+    const user= JSON.parse(window.sessionStorage.getItem('user'));
+    this.state={
+        user: user
     }
+    this.userChange= this.userChange.bind(this);
+  }
+
+  userChange(_user){
+    this.setState({user:_user});
+  }
 
   render() {
-    if(false){
-        return (<Layout/>)
+    if(this.state.user){
+        return (
+        <Layout
+          userLogin={this.userChange}
+          user={this.state.user}
+        />)
     }else{
-        return (<Login/>);
+        return (
+        <Login
+          userLogin={this.userChange}
+          user={this.state.user}
+        />);
     }
   }
 }

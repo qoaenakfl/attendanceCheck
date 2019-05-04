@@ -2,6 +2,8 @@ import React from "react";
 import {Layout, Menu, Icon } from 'antd';
 import SideLayout from './sideLayout'
 
+import FirebaseAuth from '../common/firebaseAuth'
+
 const { Header, Content, Sider } = Layout;
 
 class SiderDemo extends React.Component {
@@ -27,16 +29,25 @@ class SiderDemo extends React.Component {
             select:1
         }
 
-        this.handleClick= this.handleClick.bind(this);
+      this.handleClick= this.handleClick.bind(this);
+      this.userChange= this.userChange.bind(this);
     }
 
     handleClick(_select){
       this.setState({select:_select})
     }
 
+    userChange(_user){
+      this.props.userLogin(_user);
+    }
+
     render() {
     return (
       <Layout>
+        <FirebaseAuth
+          userLogin={this.userChange}
+          user={this.props.user}
+        />
         <SideLayout
           value={this.state}
           onSelectChange={this.handleClick}
