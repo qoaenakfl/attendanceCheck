@@ -1,5 +1,6 @@
 import React from "react";
 import {Layout, Menu, Icon } from 'antd';
+import SideLayout from './sideLayout'
 
 const { Header, Content, Sider } = Layout;
 
@@ -29,31 +30,20 @@ class SiderDemo extends React.Component {
         this.handleClick= this.handleClick.bind(this);
     }
 
-    handleClick(e){
-      this.setState({select:e.key})
+    handleClick(_select){
+      this.setState({select:_select})
     }
 
     render() {
     return (
       <Layout>
-        <Sider>
-            <div className="logo" />
-            <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']} onClick={this.handleClick}>
-                {
-                    this.state.data.map((data)=>{
-                        return(
-                            <Menu.Item key={data.id}>
-                            <Icon type={data.icon} />
-                            <span>{data.name}</span>
-                            </Menu.Item>
-                        );
-                    })
-                }
-            </Menu>
-        </Sider>          
+        <SideLayout
+          value={this.state}
+          onSelectChange={this.handleClick}
+        />          
         <Layout>
           <Header style={{ background: '#fff', padding: 10 }}>
-          <h1>{this.state.data[this.state.select-1].name}</h1>
+            <h1>{this.state.data[this.state.select-1].name}</h1>
           </Header>
           <Content style={{
             margin: '24px 16px', padding: 24, background: '#fff', minHeight: 280,

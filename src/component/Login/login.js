@@ -31,8 +31,7 @@ class loginComp extends React.Component{
                     value={this.state.phoneNum}
                     onPhoneNumChange={this.handleChange}
                 />                
-                <FirebaseAuth
-                    onUserChange={this.userChanger}/>
+                <FirebaseAuth/>
             </Layout>
         );
     };
