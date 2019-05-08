@@ -11,7 +11,7 @@ class sideLayout extends React.Component{
         this.handleClick= this.handleClick.bind(this);
     }
 
-    handleClick(e){
+    handleClick= (e)=>{
         this.props.onSelectChange(e.key);
     }
 
