@@ -4,6 +4,8 @@ import { Button } from 'antd';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 
+import { authEmail } from '../database/firebaseData'
+
 import { popErrorModal } from '../common/Popup'
 
 const provider = new firebase.auth.GoogleAuthProvider();
@@ -16,19 +18,16 @@ class firebaseAuth extends React.Component{
     signInWithGoogle= () => {
         let user;
         const _this= this;
-        firebase.auth().signInWithPopup(provider).then(result => {
-            // This gives you a Google Access Token. You can use it to access the Google API.
-            var token = result.credential.accessToken;
-            // The signed-in user info.
-            user= result.user;
-
-            if(true){
+        firebase.auth().signInWithPopup(provider)
+        .then(result => authEmail(result.user.email))
+        .then((e) => {
+            if(e){
                 throw {
-                    code: 'emailError'
+                    code : 'emailError'
                 }
             }
-          })
-          .catch(function(error) {
+        })
+        .catch(function(error) {
             // Handle Errors here.
             switch (error.code){
                 case "emailError":

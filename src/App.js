@@ -13,7 +13,6 @@ class App extends React.Component {
     constructor(props){
       super(props)
 
-      console.dir(firebase.auth().currentUser);
       this.state = {
         isLoading: true,
         isSignedIn: false
