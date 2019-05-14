@@ -1,7 +1,7 @@
 import React from "react";
 import './login.css'
 import {Layout} from 'antd';
-import FirebaseLogin from './firebaseAuth'
+import FirebaseLogin from '../../firebaseService/Login/firebaseAuth'
 
 class loginComp extends React.Component{
     constructor(props){

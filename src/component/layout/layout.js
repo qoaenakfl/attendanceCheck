@@ -1,59 +1,62 @@
 import React from "react";
-import {Layout, Menu, Icon } from 'antd';
-import SideLayout from './sideLayout'
+import { Layout, Menu, Icon } from "antd";
+import SideLayout from "./SideLayout";
 
-import FirebaseLogin from '../Login/firebaseAuth'
+import FirebaseAuth from "../../firebaseService/Login/firebaseAuth";
+
+import firebaseData from "../../firebaseService/database/firebaseData";
+import AppLoading from "../common/AppLoading";
 
 const { Header, Content, Sider } = Layout;
 
 class SiderDemo extends React.Component {
-    constructor(props){
-        super(props);
+  constructor(props) {
+    super(props);
 
-        this.state={
-            data:[
-                {
-                    id: 1,
-                    name: 'nav1',
-                    icon: 'user'
-                },{
-                    id: 2,
-                    name: 'nav2',
-                    icon: 'user'
-                },{
-                    id: 3,
-                    name: 'nav3',
-                    icon: 'user'
-                }
-            ],
-            select:1
-        }
-    }
+    this.state = {
+      data: {},
+      select: 1,
+      isLoading: true
+    };
+  }
 
-    handleClick= (_select) => {
-      this.setState({select:_select})
-    }
+  handleClick = _select => {
+    this.setState({ select: _select });
+  };
 
-    userChange= (_user) => {
-      this.props.userLogin(_user);
-    }
+  userChange = _user => {
+    this.props.userLogin(_user);
+  };
 
-    render() {
-    return (
+  componentDidMount = () => {
+    firebaseData.sideMenu().then(sideArr => {
+      if (sideArr) {
+        this.setState({
+          data: sideArr,
+          isLoading: false
+        });
+      }
+    });
+  };
+
+  render() {
+    return this.state.isLoading ? (
+      <AppLoading />
+    ) : (
       <Layout>
-        <FirebaseLogin
-        />
-        <SideLayout
-          value={this.state}
-          onSelectChange={this.handleClick}
-        />          
+        <FirebaseAuth />
+        <SideLayout value={this.state} onSelectChange={this.handleClick} />
         <Layout>
-          <Header style={{ background: '#fff', padding: 10 }}>
-            <h1>{this.state.data[this.state.select-1].name}</h1>
+          <Header style={{ background: "#fff", padding: 10 }}>
+            <h1>{this.state.data.area[0].name}</h1>
           </Header>
-          <Content style={{
-            margin: '24px 16px', padding: 24, background: '#fff', minHeight: 280,
-          }}
+          <Content
+            style={{
+              margin: "24px 16px",
+              padding: 24,
+              background: "#fff",
+              minHeight: 280
+            }}
           >
             Content
           </Content>
