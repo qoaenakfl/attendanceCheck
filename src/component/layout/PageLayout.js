@@ -1,15 +1,16 @@
 import React from "react";
-import { Layout, Menu, Icon } from "antd";
+import { Layout } from "antd";
 import SideLayout from "./SideLayout";
+import ContentLayout from './ContentLayout'
 
 import FirebaseAuth from "../../firebaseService/Login/firebaseAuth";
 
 import firebaseData from "../../firebaseService/database/firebaseData";
 import AppLoading from "../common/AppLoading";
 
-const { Header, Content, Sider } = Layout;
+const { Header, Content } = Layout;
 
-class SiderDemo extends React.Component {
+class PageLayout extends React.Component {
   constructor(props) {
     super(props);
 
@@ -48,7 +49,7 @@ class SiderDemo extends React.Component {
         <SideLayout value={this.state} onSelectChange={this.handleClick} />
         <Layout>
           <Header style={{ background: "#fff", padding: 10 }}>
-            <h1>{this.state.data.area[0].name}</h1>
+            <h1>{this.state.data.area[this.state.select-1].name}</h1>
           </Header>
           <Content
             style={{
@@ -58,7 +59,7 @@ class SiderDemo extends React.Component {
               minHeight: 280
             }}
           >
-            Content
+            <ContentLayout/>
           </Content>
         </Layout>
       </Layout>
@@ -66,4 +67,4 @@ class SiderDemo extends React.Component {
   }
 }
 
-export default SiderDemo;
+export default PageLayout;
