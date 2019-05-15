@@ -6,7 +6,7 @@ import "firebase/auth";
 
 import firebaseData from "../database/firebaseData";
 
-import { popErrorModal } from "../../component/common/popup";
+import { popErrorModal } from "../../common/popup";
 
 const provider = new firebase.auth.GoogleAuthProvider();
 

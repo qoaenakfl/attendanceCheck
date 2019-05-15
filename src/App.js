@@ -6,7 +6,7 @@ import * as firebase from "firebase/app";
 import "firebase/auth";
 
 import Login from "./component/Login/login";
-import Layout from "./component/layout/layout";
+import PageLayout from "./component/layout/PageLayout";
 import AppLoading from "./component/common/AppLoading";
 
 import firebaseData from "./firebaseService/database/firebaseData";
@@ -44,7 +44,7 @@ class App extends React.Component {
     return this.state.isLoading ? (
       <AppLoading />
     ) : this.state.isSignedIn ? (
-      <Layout />
+      <PageLayout />
     ) : (
       <Login />
     );
