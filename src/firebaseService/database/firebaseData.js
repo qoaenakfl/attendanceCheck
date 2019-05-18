@@ -63,6 +63,33 @@ class firebaseData{
             })
         })
     }
+
+    beforeContent= () => {
+        return new Promise((resolve, reject) => {
+            dataService.getBeforeContent()
+            .then(snapshot => {
+                resolve(snapshot.val());
+            })
+        })
+    }
+
+    afterContent= () => {
+        return new Promise((resolve, reject) => {
+            dataService.getAfterContent()
+            .then(snapshot => {
+                resolve(snapshot.val());
+            })
+        })
+    }
+
+    areaMember= (area) => {
+        return new Promise((resolve, reject) => {
+            dataService.getAreaMemver(area)
+            .then(snapshot => {
+                resolve(snapshot.val());
+            })
+        })
+    }
 }
 
 export default new firebaseData();

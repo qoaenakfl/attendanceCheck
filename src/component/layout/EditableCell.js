@@ -29,18 +29,31 @@ export class EditableCell extends React.Component {
 
   save = e => {
     const { record, handleSave } = this.props;
+    console.dir(record);
     this.form.validateFields((error, values) => {
       if (error && error[e.currentTarget.id]) {
         return;
       }
+
       this.toggleEdit();
+
       handleSave({ ...record, ...values });
     });
   };
 
-  handleClick = e => {
-    this.setState({select:e-1});
+  dropdownClick = e => {
+    const { record, handleSave } = this.props;
+    this.setState({ select: e.key - 1 });
+
+    handleSave({
+      ...record,
+      time: this.props.dropData[this.state.select].time
+    });
   };
+
+  renderDropdown= () => {
+    
+  }
 
   render() {
     const { editing } = this.state;
@@ -62,7 +75,31 @@ export class EditableCell extends React.Component {
           <EditableContext.Consumer>
             {form => {
               this.form = form;
-              return editing ? (
+              return isDrop ? (
+                <FormItem style={{ margin: 0 }}>
+                  {
+                    <Dropdown
+                      overlay={
+                        <Menu onClick={this.dropdownClick}>
+                          {dropData.map(data => {
+                            return (
+                              <Menu.Item key={data.id}>
+                                <span>{data.time}</span>
+                              </Menu.Item>
+                            );
+                          })}
+                        </Menu>
+                      }
+                      trigger={["click"]}
+                    >
+                      <a>
+                        {dropData[this.state.select].time}
+                        <Icon type="down" />
+                      </a>
+                    </Dropdown>
+                  }
+                </FormItem>
+              ) : editing ? (
                 <FormItem style={{ margin: 0 }}>
                   {form.getFieldDecorator(dataIndex, {
                     rules: [
@@ -80,25 +117,6 @@ export class EditableCell extends React.Component {
                     />
                   )}
                 </FormItem>
-              ) : isDrop ? (
-                <Dropdown
-                  overlay={
-                    <Menu defaultSelectedKeys={["2"]} onClick={this.handleClick}>
-                      {dropData.map(data => {
-                        return (
-                          <Menu.Item key={data.id}>
-                            <a>{data.time}</a>
-                          </Menu.Item>
-                        );
-                      })}
-                    </Menu>
-                  }
-                  trigger={["click"]}
-                >
-                  <a className="ant-dropdown-link" href="#">
-                    {dropData[this.state.select].time}<Icon type="down" />
-                  </a>
-                </Dropdown>
               ) : (
                 <div
                   className="editable-cell-value-wrap"

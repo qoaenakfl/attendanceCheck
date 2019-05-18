@@ -59,7 +59,7 @@ class PageLayout extends React.Component {
               minHeight: 280
             }}
           >
-            <ContentLayout/>
+            <ContentLayout contentNum={this.state.select}/>
           </Content>
         </Layout>
       </Layout>

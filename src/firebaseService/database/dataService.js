@@ -23,6 +23,18 @@ class dataService{
         }
         return firebase.database().ref('time/'+day).once('value');
     }
+
+    getBeforeContent= () => {
+        return firebase.database().ref('content/beforeColumns').once('value');
+    }
+
+    getAfterContent= () => {
+        return firebase.database().ref('content/afterColumns').once('value');
+    }
+
+    getAreaMemver= (area) => {
+        return firebase.database().ref('area/'+area).once('value');
+    }
 }
 
 export default new dataService();

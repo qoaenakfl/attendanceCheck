@@ -37,35 +37,19 @@ class ContentLayout extends React.Component {
           key: "0",
           name: "Edward King 0",
           area: "1",
-          location: "서울",
-          time: "15:00"
+          location: "서울"
         },
         {
           key: "1",
           name: "Edward King 1",
           area: "1",
-          location: "서울",
-          time: "15:00"
+          location: "서울"
         }
       ],
       count: 2,
       isLoading: true
     };
   }
-
-  handleAdd = () => {
-    const { count, dataSource } = this.state;
-    const newData = {
-      key: count,
-      name: `Edward King ${count}`,
-      age: 32,
-      address: `London, Park Lane no. ${count}`
-    };
-    this.setState({
-      dataSource: [...dataSource, newData],
-      count: count + 1
-    });
-  };
 
   handleSave = row => {
     const newData = [...this.state.dataSource];
@@ -81,9 +65,38 @@ class ContentLayout extends React.Component {
   componentDidMount = () => {
     firebaseData.dropMenu("wed").then(dropData => {
       this.setState({
-        dropData: dropData,
-        isLoading: false
+        dropData: dropData
       });
+      
+      this.getTabelColumns();
+    });
+  };
+
+  getAreaMember= () =>{
+    firebaseData.areaMember(firebaseData.data.area)
+      .then(member => {
+        this.setState({dataSource: member});
+    });
+  }
+
+  componentDidUpdate = () => {
+    this.getTabelColumns();
+  };
+
+  getColumns = () => {
+    if (this.props.contentNum == 1) {
+      return firebaseData.beforeContent();
+    } else if (this.props.contentNum == 2) {
+      return firebaseData.afterContent();
+    } else {
+      return new Error("에러");
+    }
+  };
+
+  getTabelColumns = () => {
+    this.getColumns().then(_columns => {
+      this.columns = _columns;
+      this.setState({ isLoading: false });
     });
   };
 
@@ -95,6 +108,7 @@ class ContentLayout extends React.Component {
         cell: EditableCell
       }
     };
+
     const columns = this.columns.map(col => {
       if (!col.editable) {
         return col;
@@ -119,7 +133,7 @@ class ContentLayout extends React.Component {
         ) : (
           <div>
             <Button
-              onClick={this.handleAdd}
+              //onClick={this.handleAdd}
               type="primary"
               style={{ marginBottom: 16 }}
             >
