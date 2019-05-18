@@ -47,22 +47,72 @@ export class EditableCell extends React.Component {
 
     handleSave({
       ...record,
-      time: this.props.dropData[this.state.select].time
+      time: this.props.dropData[e.key-1].time
     });
   };
 
-  renderDropdown= () => {
-    
-  }
+  dropdownRender = () => {
+    const { dropData } = this.props;
+
+    const rendering = (
+      <FormItem style={{ margin: 0 }}>
+        {
+          <Dropdown
+            overlay={
+              <Menu onClick={this.dropdownClick}>
+                {dropData.map(data => {
+                  return (
+                    <Menu.Item key={data.id}>
+                      <span>{data.time}</span>
+                    </Menu.Item>
+                  );
+                })}
+              </Menu>
+            }
+            trigger={["click"]}
+          >
+            <a>
+              {dropData[this.state.select].time}
+              <Icon type="down" />
+            </a>
+          </Dropdown>
+        }
+      </FormItem>
+    );
+
+    return rendering;
+  };
+
+  editableInputRender = form => {
+    const { dataindex, title, record } = this.props;
+    const rendering = (
+      <FormItem style={{ margin: 0 }}>
+        {form.getFieldDecorator(dataindex, {
+          rules: [
+            {
+              required: true,
+              message: `${title} is required.`
+            }
+          ],
+          initialValue: record[dataindex]
+        })(
+          <Input
+            ref={node => (this.input = node)}
+            onPressEnter={this.save}
+            onBlur={this.save}
+          />
+        )}
+      </FormItem>
+    );
+
+    return rendering;
+  };
 
   render() {
     const { editing } = this.state;
     const {
       isDrop,
       editable,
-      dataIndex,
-      title,
-      record,
       index,
       handleSave,
       dropData,
@@ -76,47 +126,9 @@ export class EditableCell extends React.Component {
             {form => {
               this.form = form;
               return isDrop ? (
-                <FormItem style={{ margin: 0 }}>
-                  {
-                    <Dropdown
-                      overlay={
-                        <Menu onClick={this.dropdownClick}>
-                          {dropData.map(data => {
-                            return (
-                              <Menu.Item key={data.id}>
-                                <span>{data.time}</span>
-                              </Menu.Item>
-                            );
-                          })}
-                        </Menu>
-                      }
-                      trigger={["click"]}
-                    >
-                      <a>
-                        {dropData[this.state.select].time}
-                        <Icon type="down" />
-                      </a>
-                    </Dropdown>
-                  }
-                </FormItem>
+                this.dropdownRender()
               ) : editing ? (
-                <FormItem style={{ margin: 0 }}>
-                  {form.getFieldDecorator(dataIndex, {
-                    rules: [
-                      {
-                        required: true,
-                        message: `${title} is required.`
-                      }
-                    ],
-                    initialValue: record[dataIndex]
-                  })(
-                    <Input
-                      ref={node => (this.input = node)}
-                      onPressEnter={this.save}
-                      onBlur={this.save}
-                    />
-                  )}
-                </FormItem>
+                this.editableInputRender(form)
               ) : (
                 <div
                   className="editable-cell-value-wrap"

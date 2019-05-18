@@ -67,7 +67,7 @@ class ContentLayout extends React.Component {
       this.setState({
         dropData: dropData
       });
-      
+      this.getAreaMember();
       this.getTabelColumns();
     });
   };
@@ -118,7 +118,7 @@ class ContentLayout extends React.Component {
         onCell: record => ({
           record,
           editable: col.editable,
-          dataIndex: col.dataIndex,
+          dataindex: col.dataIndex,
           title: col.title,
           handleSave: this.handleSave,
           isDrop: col.isDrop,
