@@ -1,5 +1,5 @@
 import React from "react";
-import { Input, Form, Menu, Dropdown, Icon } from "antd";
+import { Input, Form, Menu, Dropdown, Icon, Switch } from "antd";
 
 const FormItem = Form.Item;
 const EditableContext = React.createContext();
@@ -29,7 +29,6 @@ export class EditableCell extends React.Component {
 
   save = e => {
     const { record, handleSave } = this.props;
-    console.dir(record);
     this.form.validateFields((error, values) => {
       if (error && error[e.currentTarget.id]) {
         return;
@@ -47,8 +46,34 @@ export class EditableCell extends React.Component {
 
     handleSave({
       ...record,
-      time: this.props.dropData[e.key-1].time
+      time: this.props.dropData[e.key - 1].time
     });
+  };
+
+  switchChange = checked => {
+    const { record, handleSave } = this.props;
+
+    handleSave({
+      ...record,
+      note: checked
+    });
+  };
+
+  switchRender = () => {
+    const rendering = (
+      <FormItem style={{ margin: 0 }}>
+        {
+          <Switch
+            defaultChecked
+            checkedChildren="제출"
+            unCheckedChildren="미제출"
+            onChange={this.switchChange}
+          />
+        }
+      </FormItem>
+    );
+
+    return rendering;
   };
 
   dropdownRender = () => {
@@ -112,6 +137,7 @@ export class EditableCell extends React.Component {
     const { editing } = this.state;
     const {
       isDrop,
+      isSwitch,
       editable,
       index,
       handleSave,
@@ -127,6 +153,8 @@ export class EditableCell extends React.Component {
               this.form = form;
               return isDrop ? (
                 this.dropdownRender()
+              ) : isSwitch ? (
+                this.switchRender()
               ) : editing ? (
                 this.editableInputRender(form)
               ) : (

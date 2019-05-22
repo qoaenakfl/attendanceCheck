@@ -25,13 +25,11 @@ class firebaseData{
         return new Promise((resolve, reject) => {
             encodeForFirebaseKey(email)
             .then(s => {
-                console.log('authLogin'+s);
                 this.email= s;
                 return dataService.getUserInfo(s);
             })
             .then(snapshot => {
                 if(snapshot.val() == null){
-                    console.log('authLogin'+snapshot.val());
                     this.data= snapshot.val();
                     resolve(true);
                 }else{

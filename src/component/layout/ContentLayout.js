@@ -84,9 +84,9 @@ class ContentLayout extends React.Component {
   };
 
   getColumns = () => {
-    if (this.props.contentNum == 1) {
+    if (this.props.contentnumber == 1) {
       return firebaseData.beforeContent();
-    } else if (this.props.contentNum == 2) {
+    } else if (this.props.contentnumber == 2) {
       return firebaseData.afterContent();
     } else {
       return new Error("에러");
@@ -122,7 +122,9 @@ class ContentLayout extends React.Component {
           title: col.title,
           handleSave: this.handleSave,
           isDrop: col.isDrop,
-          dropData: this.state.dropData
+          dropData: this.state.dropData,
+          contentnumber: this.props.contentnumber,
+          isSwitch: col.isSwitch
         })
       };
     });
