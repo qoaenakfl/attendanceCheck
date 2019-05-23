@@ -1,7 +1,8 @@
 import React from "react";
 import { Table, Button } from "antd";
 
-import { EditableCell, EditableFormRow } from "./EditableCell";
+import { EditableCell } from "./EditableCell";
+import {EditableFormRow} from './editableCell/cellFrom'
 
 import firebaseData from "../../firebaseService/database/firebaseData";
 import AppLoading from "../common/AppLoading";
@@ -60,7 +61,12 @@ class ContentLayout extends React.Component {
       ...row
     });
     this.setState({ dataSource: newData });
+    console.log(newData);
   };
+
+  saveData= () => {
+    console.dir(this.state.dataSource)
+  }
 
   componentDidMount = () => {
     firebaseData.dropMenu("wed").then(dropData => {
@@ -135,7 +141,7 @@ class ContentLayout extends React.Component {
         ) : (
           <div>
             <Button
-              //onClick={this.handleAdd}
+              onClick={this.saveData}
               type="primary"
               style={{ marginBottom: 16 }}
             >
