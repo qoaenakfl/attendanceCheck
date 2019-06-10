@@ -48,7 +48,11 @@ class ContentLayout extends React.Component {
         }
       ],
       count: 2,
-      isLoading: true
+      isLoading: true,
+      time: [],
+      worship: [],
+      meeting: [],
+      note: []
     };
   }
 
@@ -61,7 +65,6 @@ class ContentLayout extends React.Component {
       ...row
     });
     this.setState({ dataSource: newData });
-    console.log(newData);
   };
 
   saveData= () => {
@@ -81,6 +84,20 @@ class ContentLayout extends React.Component {
   getAreaMember= () =>{
     firebaseData.areaMember(firebaseData.data.area)
       .then(member => {
+        let row={
+          time:this.state.dropData[2].time,
+          worship:this.state.dropData[2].time,
+          meeting:this.state.dropData[2].time,
+          note:true
+        };
+        console.log(row);
+        for(let i=0;i<member.length;i++){
+          let item= member[i];
+          member.splice(i,1,{
+            ...item,
+            ...row
+          })
+        }
         this.setState({dataSource: member});
     });
   }

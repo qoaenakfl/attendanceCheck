@@ -4,12 +4,12 @@ import { FormItem } from "./cellFrom";
 
 class SwitchCell extends React.Component {
   switchChange = checked => {
-    const { record, handleSave } = this.props;
+    // const { record, handleSave } = this.props;
 
-    handleSave({
-      ...record,
-      note: checked
-    });
+    // handleSave({
+    //   ...record,
+    //   note: checked
+    // });
   };
 
   render() {

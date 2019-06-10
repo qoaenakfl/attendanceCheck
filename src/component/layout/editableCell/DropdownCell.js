@@ -4,26 +4,35 @@ import { FormItem } from "./cellFrom";
 
 class DropdownCell extends React.Component {
 
-  state = {
-    select: 2
-  };
+  constructor(props){
+    super(props);
 
-  componentDidMount= () => {
-    const { record, handleSave } = this.props;
-    handleSave({
-      ...record,
-      time: this.props.dropData[this.state.select - 1].time
-    });
+    this.state = {
+      select: 2
+    };
   }
 
   dropdownClick = e => {
-    const { record, handleSave } = this.props;
+
+    const { record, handleSave, title } = this.props;
     this.setState({ select: e.key - 1 });
 
-    handleSave({
+    if(title == 'worship'){
+      handleSave({
+      ...record,
+      worship: this.props.dropData[e.key - 1].time
+      });
+    }else if(title == 'meeting'){
+      handleSave({
+      ...record,
+      meeting: this.props.dropData[e.key - 1].time
+      });
+    }else if(title == 'time'){
+      handleSave({
       ...record,
       time: this.props.dropData[e.key - 1].time
-    });
+      });
+    }    
   };
 
   render() {

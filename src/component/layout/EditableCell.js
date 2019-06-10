@@ -7,6 +7,14 @@ import EditableInputCell from "./editableCell/EditableInputCell";
 import SwitchCell from "./editableCell/SwitchCell";
 
 export class EditableCell extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state={
+      record: this.props.record
+    }
+  }
+
   render() {
     const {
       isDrop,
@@ -32,6 +40,7 @@ export class EditableCell extends React.Component {
                   dropData={dropData}
                   handleSave={handleSave}
                   record={record}
+                  title={title}
                 />
               ) : isSwitch ? (
                 <SwitchCell
