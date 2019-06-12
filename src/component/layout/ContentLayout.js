@@ -2,11 +2,14 @@ import React from "react";
 import { Table, Button } from "antd";
 
 import { EditableCell } from "./EditableCell";
-import {EditableFormRow} from './editableCell/cellFrom'
+import { EditableFormRow } from "./editableCell/cellFrom";
 
 import firebaseData from "../../firebaseService/database/firebaseData";
 import AppLoading from "../common/AppLoading";
 
+import { getReportDay, getReportDate } from "../../common/dayParser";
+
+import logger from "../../common/logger";
 class ContentLayout extends React.Component {
   constructor(props) {
     super(props);
@@ -58,6 +61,7 @@ class ContentLayout extends React.Component {
 
   handleSave = row => {
     const newData = [...this.state.dataSource];
+    logger(newData);
     const index = newData.findIndex(item => row.key === item.key);
     const item = newData[index];
     newData.splice(index, 1, {
@@ -67,40 +71,63 @@ class ContentLayout extends React.Component {
     this.setState({ dataSource: newData });
   };
 
-  saveData= () => {
-    console.dir(this.state.dataSource)
-  }
+  saveData = () => {
+    logger("*********************************");
+    logger("*************saveData*************");
+    logger("*********************************");
+    getReportDate().then(date => {
+      logger(date);
+      if (this.props.contentnumber == 1) {
+        logger(typeof this.state.dataSource);
+        firebaseData.beforeReport(
+          date,
+          [...this.state.dataSource],
+          firebaseData.data.area
+        );
+      } else if (this.props.contentnumber == 2) {
+        firebaseData.afterReport(
+          date,
+          [...this.state.dataSource],
+          firebaseData.data.area
+        );
+      }
+    });
+    logger(this.state.dataSource);
+  };
 
   componentDidMount = () => {
-    firebaseData.dropMenu("wed").then(dropData => {
-      this.setState({
-        dropData: dropData
+    getReportDay().then(day => {
+      firebaseData.dropMenu(day).then(dropData => {
+        this.setState({
+          dropData: dropData
+        });
+        this.getAreaMember();
+        this.getTabelColumns();
       });
-      this.getAreaMember();
-      this.getTabelColumns();
     });
   };
 
-  getAreaMember= () =>{
-    firebaseData.areaMember(firebaseData.data.area)
-      .then(member => {
-        let row={
-          time:this.state.dropData[2].time,
-          worship:this.state.dropData[2].time,
-          meeting:this.state.dropData[2].time,
-          note:true
-        };
-        console.log(row);
-        for(let i=0;i<member.length;i++){
-          let item= member[i];
-          member.splice(i,1,{
-            ...item,
-            ...row
-          })
-        }
-        this.setState({dataSource: member});
+  getAreaMember = () => {
+    firebaseData.areaMember(firebaseData.data.area).then(member => {
+      let row = {
+        time: this.state.dropData[2].time,
+        worship: this.state.dropData[2].time,
+        meeting: this.state.dropData[2].time,
+        note: true
+      };
+      for (let i = 0; i < member.length; i++) {
+        let item = member[i];
+        member.splice(i, 1, {
+          ...item,
+          ...row
+        });
+      }
+      logger("*********************************");
+      logger("*************saveData*************");
+      logger("*********************************");
+      this.setState({ dataSource: member });
     });
-  }
+  };
 
   componentDidUpdate = () => {
     this.getTabelColumns();
