@@ -1,11 +1,10 @@
 import React from "react";
-import { Switch } from "antd";
+import { Switch } from "../../login/node_modules/antd";
 import { FormItem } from "./cellFrom";
 
 class SwitchCell extends React.Component {
   switchChange = checked => {
     // const { record, handleSave } = this.props;
-
     // handleSave({
     //   ...record,
     //   note: checked

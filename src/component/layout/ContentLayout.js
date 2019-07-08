@@ -10,6 +10,7 @@ import AppLoading from "../common/AppLoading";
 import { getReportDay, getReportDate } from "../../common/dayParser";
 
 import logger from "../../common/logger";
+
 class ContentLayout extends React.Component {
   constructor(props) {
     super(props);

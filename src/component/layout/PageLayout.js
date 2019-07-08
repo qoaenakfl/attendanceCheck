@@ -3,7 +3,7 @@ import { Layout } from "antd";
 import SideLayout from "./SideLayout";
 import ContentLayout from './ContentLayout'
 
-import FirebaseAuth from "../../firebaseService/Login/firebaseAuth";
+import FirebaseAuth from "../login/FirebaseLogin";
 
 import firebaseData from "../../firebaseService/database/firebaseData";
 import AppLoading from "../common/AppLoading";

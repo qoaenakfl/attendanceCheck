@@ -1,29 +1,28 @@
-import React from "react";
-import './login.css'
-import {Layout} from 'antd';
-import FirebaseLogin from '../../firebaseService/Login/firebaseAuth'
+import React from "react;
+import "./Login.css";
+import { Layout } from "antd";
+import FirebaseLogin from "./FirebaseLogin";
 
-class loginComp extends React.Component{
-    constructor(props){
-        super(props);
-    }
+class Login extends React.Component {
+  constructor(props) {
+    super(props);
+  }
 
-    handleChange= (phoneNum) =>{
-        this.setState({phoneNum: phoneNum});
-    }
+  handleChange = phoneNum => {
+    this.setState({ phoneNum: phoneNum });
+  };
 
-    userChange= (_user) =>{
-        this.props.userLogin(_user);
-    }
- 
-    render(){
-        return(    
-            <Layout>           
-                <FirebaseLogin
-                />
-            </Layout>
-        );
-    };
+  userChange = user => {
+    this.props.userLogin(user);
+  };
+
+  render() {
+    return (
+      <Layout>
+        <FirebaseLogin />
+      </Layout>
+    );
+  }
 }
 
-export default loginComp;
+export default Login;

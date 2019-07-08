@@ -1,11 +1,10 @@
 import React from "react";
-import "antd/dist/antd.css";
 import "./index.css";
 
 import * as firebase from "firebase/app";
 import "firebase/auth";
 
-import Login from "./component/Login/login";
+import Login from "./component/login/login";
 import PageLayout from "./component/layout/PageLayout";
 import AppLoading from "./component/common/AppLoading";
 
@@ -24,14 +23,12 @@ class App extends React.Component {
   componentDidMount() {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
-        // User is signed in
         firebaseData.setUser(user.email);
         this.setState({
           isSignedIn: true,
           isLoading: false
         });
       } else {
-        // No user is signed in.
         this.setState({
           isSignedIn: false,
           isLoading: false

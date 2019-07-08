@@ -1,9 +1,9 @@
 import React from "react";
-import { Layout, Menu, Icon } from "antd";
+import { Layout, Menu, Icon } from "../login/node_modules/antd";
 
 const { Sider } = Layout;
 
-class sideLayout extends React.Component {
+class SideLayout extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -41,4 +41,4 @@ class sideLayout extends React.Component {
   }
 }
 
-export default sideLayout;
+export default SideLayout;

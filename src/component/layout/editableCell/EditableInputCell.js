@@ -1,5 +1,5 @@
 import React from "react";
-import { Input } from "antd";
+import { Input } from "../../login/node_modules/antd";
 import { FormItem } from "./cellFrom";
 
 class EditableInputCell extends React.Component {

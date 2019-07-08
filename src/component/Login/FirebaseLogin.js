@@ -1,16 +1,14 @@
 import React from "react";
 import { Button } from "antd";
-
 import * as firebase from "firebase/app";
 import "firebase/auth";
-
-import firebaseData from "../database/firebaseData";
+import firebaseData from "../../firebaseService/database/firebaseData";
 
 import { popErrorModal } from "../../common/popup";
 
 const provider = new firebase.auth.GoogleAuthProvider();
 
-class firebaseAuth extends React.Component {
+class FirebaseLogin extends React.Component {
   signInWithGoogle = () => {
     const _this = this;
     firebase
@@ -66,4 +64,4 @@ class firebaseAuth extends React.Component {
   }
 }
 
-export default firebaseAuth;
+export default FirebaseLogin;

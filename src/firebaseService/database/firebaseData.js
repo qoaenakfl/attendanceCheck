@@ -43,15 +43,17 @@ class firebaseData {
     this.data = {};
   };
 
-  sideMenu = () => {
-    return new Promise((resolve, reject) => {
-      dataService.getSideMenu(this.email).then(snapshot => {
-        resolve(snapshot.val());
-      });
-    });
-  };
+  sideMenu = () => dataService.getSideMenu(this.email).then(snapshot => snapshot)
+  // {   
+  //   return new Promise((resolve, reject) => {
+  //     dataService.getSideMenu(this.email).then(snapshot => {
+  //       resolve(snapshot.val());
+  //     });
+  //   });
+  // };
 
   dropMenu = day => {
+
     return new Promise((resolve, reject) => {
       dataService.getDropTime(day).then(snapshot => {
         resolve(snapshot.val());
